@@ -4,6 +4,9 @@ function create_binding {
     contract_dir=$1
     contract=$2
     binding_dir=$3
+    echo  $contract_dir
+    echo  $contract
+    echo  $binding_dir
     echo "generating bindings for" $contract
     mkdir -p $binding_dir/${contract}
     contract_json="$contract_dir/out/${contract}.sol/${contract}.json"

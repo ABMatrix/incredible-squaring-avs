@@ -1,0 +1,13 @@
+{
+  "addresses": {
+    "credibleSquaringServiceManager": "0xE694607253531b57E3572022AAB95A3aDBc3A3e4",
+    "credibleSquaringServiceManagerImplementation": "0xB5B55b634392E1917713451A38302D77997A6a80",
+    "credibleSquaringTaskManager": "0x17eFa7902074Baa3B0ADB9b1223C9501d1Fd1C5A",
+    "credibleSquaringTaskManagerImplementation": "0x82828554C5e430BeD641d8c7c84A8AaBb35d3639",
+    "erc20Mock": "0x7c7c1357C9982894f58CBEA40631f20539C66841",
+    "erc20MockStrategy": "0xF189CbB283E0B06A54D903d989985D87d5a5C3C9",
+    "operatorStateRetriever": "0x6d9B88840Dba1Bcc8ABecD4AcA60546175414D36",
+    "registryCoordinator": "0x6Af9eFB9D6df63731eFeA224e616212eC63Ae84d",
+    "registryCoordinatorImplementation": "0xc0D93E10D5862952f8584362915286b726211dEB"
+  }
+}

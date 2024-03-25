@@ -1,0 +1,38 @@
+{
+  "addresses": {
+    "avsDirectory": "0x80818A394fD2F9e3065bEE6E2893fAcc9A38829b",
+    "avsDirectoryImplementation": "0x96a1dAb74640152060761Da6F808F4E84Da036A3",
+    "baseStrategyImplementation": "0x8F807647D8F42b579Eba8C5DCbcA4E15C46ed7b8",
+    "beaconOracle": "0x4C116BB629bff7A8373c2378bBd919f8349B8f25",
+    "delayedWithdrawalRouter": "0x56cB4d84A0bB85Eb326353B61E73c12A4CF40FA5",
+    "delayedWithdrawalRouterImplementation": "0x1689cAf815492f978cEE1f61cc4d7CA43b948384",
+    "delegationManager": "0xe5749807Cd3ca785bC460d62d229616b27efBD3E",
+    "delegationManagerImplementation": "0x46996Fb344a7f55bC4bA17CCdCD735Cb41763f8b",
+    "eigenLayerPauserReg": "0xC4bE2ec8362283278859a1DbBA69f1aDC405fEde",
+    "eigenLayerProxyAdmin": "0x9F8508c7EF153378B7de702A4Ab77B754718F783",
+    "eigenPodBeacon": "0xbfe0259C14404154E03B276d5F213f9c8959AcCa",
+    "eigenPodImplementation": "0x073DD4270e3571fA20249c9C7bFDeEFe8E1c6C84",
+    "eigenPodManager": "0xF487D7E7C3C22E2c0437d127fBf47b592C6cd1a0",
+    "eigenPodManagerImplementation": "0xf324fCb3032124a1e000C7d9a4e73F279590fd57",
+    "emptyContract": "0x0BB4cB03E20588d5335EDBb43F68Cf339b3B3953",
+    "slasher": "0x25E9E06e233e8BEa6A1ce1FAc063B71459c46c85",
+    "slasherImplementation": "0x3a0520CC406EDB3F735462115285962c15e070bd",
+    "strategies": {
+      "WETH": "0x9ce412BA6A715d03AC70b2Ec1e921b18260f9424",
+      "rETH": "0x06e9BA527Bf5671C4D4fE1752Fc61220B46d7476",
+      "stETH": "0x720Db4eAB68b1DB02140bfDb79F59b7311c1B06F"
+    },
+    "strategyManager": "0xed9df70f6E01F6eAD317346855808980c457EbeC",
+    "strategyManagerImplementation": "0xa4ac9a07DE6cDaD86C0dE862787F6a647F9c3d8e"
+  },
+  "chainInfo": {
+    "chainId": 17000,
+    "deploymentBlock": 1191577
+  },
+  "parameters": {
+    "communityMultisig": "0x9A501b86263c252b85a5fA93a8d4C19dCF7A3D41",
+    "executorMultisig": "0x9A501b86263c252b85a5fA93a8d4C19dCF7A3D41",
+    "operationsMultisig": "0x9A501b86263c252b85a5fA93a8d4C19dCF7A3D41",
+    "pauserMultisig": "0x9A501b86263c252b85a5fA93a8d4C19dCF7A3D41"
+  }
+}

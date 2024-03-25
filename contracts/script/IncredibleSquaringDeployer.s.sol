@@ -30,7 +30,7 @@ import "forge-std/StdJson.sol";
 import "forge-std/console.sol";
 
 // # To deploy and verify our contract
-// forge script script/CredibleSquaringDeployer.s.sol:CredibleSquaringDeployer --rpc-url $RPC_URL  --private-key $PRIVATE_KEY --broadcast -vvvv
+// forge script script/IncredibleSquaringDeployer.s.sol:IncredibleSquaringDeployer --rpc-url $RPC_URL  --private-key $PRIVATE_KEY --broadcast -vvvv
 contract IncredibleSquaringDeployer is Script, Utils {
     // DEPLOYMENT CONSTANTS
     uint256 public constant QUORUM_THRESHOLD_PERCENTAGE = 100;
@@ -38,9 +38,9 @@ contract IncredibleSquaringDeployer is Script, Utils {
     uint32 public constant TASK_DURATION_BLOCKS = 0;
     // TODO: right now hardcoding these (this address is anvil's default address 9)
     address public constant AGGREGATOR_ADDR =
-        0xa0Ee7A142d267C1f36714E4a8F75612F20a79720;
+    0x0Aeac6FDEF3Fcf066514312C9faCaBC2cD1143a9;
     address public constant TASK_GENERATOR_ADDR =
-        0xa0Ee7A142d267C1f36714E4a8F75612F20a79720;
+    0x0Aeac6FDEF3Fcf066514312C9faCaBC2cD1143a9;
 
     // ERC20 and Strategy: we need to deploy this erc20, create a strategy for it, and whitelist this strategy in the strategymanager
 
@@ -75,7 +75,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
     function run() external {
         // Eigenlayer contracts
         string memory eigenlayerDeployedContracts = readOutput(
-            "eigenlayer_deployment_output"
+            "M2_deploy_from_scratch.holesky.config"
         );
         IStrategyManager strategyManager = IStrategyManager(
             stdJson.readAddress(
@@ -86,7 +86,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
         IDelegationManager delegationManager = IDelegationManager(
             stdJson.readAddress(
                 eigenlayerDeployedContracts,
-                ".addresses.delegation"
+                ".addresses.delegationManager"
             )
         );
         ProxyAdmin eigenLayerProxyAdmin = ProxyAdmin(
@@ -153,7 +153,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
         );
         IStrategy[] memory strats = new IStrategy[](1);
         strats[0] = erc20MockStrategy;
-        strategyManager.addStrategiesToDepositWhitelist(strats);
+//        strategyManager.addStrategiesToDepositWhitelist(strats);
     }
 
     function _deployCredibleSquaringContracts(

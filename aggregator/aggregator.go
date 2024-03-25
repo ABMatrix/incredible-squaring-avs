@@ -105,7 +105,7 @@ func NewAggregator(c *config.Config) (*Aggregator, error) {
 		return nil, err
 	}
 
-	operatorPubkeysService := oppubkeysserv.NewOperatorPubkeysServiceInMemory(context.Background(), clients.AvsRegistryChainSubscriber, clients.AvsRegistryChainReader, c.Logger)
+	operatorPubkeysService := oppubkeysserv.NewOperatorPubkeysServiceInMemoryWithStart(context.Background(), clients.AvsRegistryChainSubscriber, clients.AvsRegistryChainReader, c.Logger, 1212327)
 	avsRegistryService := avsregistry.NewAvsRegistryServiceChainCaller(avsReader, operatorPubkeysService, c.Logger)
 	blsAggregationService := blsagg.NewBlsAggregatorService(avsRegistryService, c.Logger)
 
