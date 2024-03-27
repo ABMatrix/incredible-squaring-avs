@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"errors"
+	"github.com/Layr-Labs/eigensdk-go/chainio/clients/wallet"
 	"os"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -30,8 +31,8 @@ type Config struct {
 	// only take an ethclient or an rpcUrl (and build the ethclient at each constructor site)
 	EthHttpRpcUrl                             string
 	EthWsRpcUrl                               string
-	EthHttpClient                             eth.EthClient
-	EthWsClient                               eth.EthClient
+	EthHttpClient                             eth.Client
+	EthWsClient                               eth.Client
 	OperatorStateRetrieverAddr                common.Address
 	IncredibleSquaringRegistryCoordinatorAddr common.Address
 	AggregatorServerIpPortAddr                string
@@ -121,7 +122,10 @@ func NewConfig(ctx *cli.Context) (*Config, error) {
 	if err != nil {
 		panic(err)
 	}
-	txMgr := txmgr.NewSimpleTxManager(ethRpcClient, logger, signerV2, aggregatorAddr)
+
+	pkWallet, err := wallet.NewPrivateKeyWallet(ethRpcClient, signerV2, aggregatorAddr, logger)
+
+	txMgr := txmgr.NewSimpleTxManager(pkWallet, ethRpcClient, logger, aggregatorAddr)
 
 	config := &Config{
 		EcdsaPrivateKey:            ecdsaPrivateKey,
