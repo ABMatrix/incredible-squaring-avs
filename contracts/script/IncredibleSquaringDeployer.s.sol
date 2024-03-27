@@ -360,16 +360,23 @@ contract IncredibleSquaringDeployer is Script, Utils {
             incredibleSquaringTaskManager
         );
         // Third, upgrade the proxy contracts to use the correct implementation contracts and initialize them.
-        incredibleSquaringProxyAdmin.upgradeAndCall(
+        incredibleSquaringProxyAdmin.upgrade(
             TransparentUpgradeableProxy(
                 payable(address(incredibleSquaringServiceManager))
             ),
-            address(incredibleSquaringServiceManagerImplementation),
-            abi.encodeWithSelector(
-                incredibleSquaringServiceManager.initialize.selector,
-                incredibleSquaringCommunityMultisig
-            )
+            address(incredibleSquaringServiceManagerImplementation)
         );
+
+//        incredibleSquaringProxyAdmin.upgradeAndCall(
+//            TransparentUpgradeableProxy(
+//                payable(address(incredibleSquaringServiceManager))
+//            ),
+//            address(incredibleSquaringServiceManagerImplementation),
+//            abi.encodeWithSelector(
+//                incredibleSquaringServiceManager.initialize.selector,
+//                incredibleSquaringCommunityMultisig
+//            )
+//        );
 
         incredibleSquaringTaskManagerImplementation = new IncredibleSquaringTaskManager(
             registryCoordinator,

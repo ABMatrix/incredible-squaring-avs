@@ -8,12 +8,12 @@ operator_address: 0x0Aeac6FDEF3Fcf066514312C9faCaBC2cD1143a9
 # This is the address of the slasher which is deployed in the anvil saved state
 # The saved eigenlayer state is located in tests/anvil/credible_squaring_avs_deployment_output.json
 # TODO(samlaf): automate updating these addresses when we deploy new contracts
-avs_registry_coordinator_address: 0xac095F950637567aB0c53F1D96A3A64044b183bA
-operator_state_retriever_address: 0x069e90E4904cad074fe0Dd9C7F3daCcAd8aa21a0
+avs_registry_coordinator_address: 0xeB7EbDdE99684470D6DAf7AE530fB54e8c26c33d
+operator_state_retriever_address: 0x8584a4751e5c881bb3e6C65F7Ee01414b07Aacb3
 
 # ETH RPC URL
-eth_rpc_url: https://ethereum-holesky-rpc.publicnode.com
-eth_ws_url: wss://ethereum-holesky-rpc.publicnode.com
+eth_rpc_url: https://holesky.drpc.org
+eth_ws_url: wss://holesky.drpc.org
 
 # If you running this using eigenlayer CLI and the provided AVS packaging structure,
 # this should be /operator_keys/ecdsa_key.json as the host path will be asked while running
@@ -40,5 +40,5 @@ enable_node_api: true
 register_operator_on_startup: true
 # address of token to deposit tokens into when registering on startup
 # addresses.erc20MockStrategy in tests/anvil/credible_squaring_avs_deployment_output.json
-token_strategy_addr: 0x84FCb3FFD7Df0A6FcCa54dD6d095425037C25923
+token_strategy_addr: 0x3B2fB6Fb6d96fC823aFB1D2579411E2AFd3eC204
 deployment_block: 1212327
