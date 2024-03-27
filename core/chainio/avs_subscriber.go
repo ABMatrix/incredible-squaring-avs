@@ -15,7 +15,10 @@ import (
 
 type AvsSubscriberer interface {
 	SubscribeToNewTasks(newTaskCreatedChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerNewTaskCreated) event.Subscription
+
+	SubscribeToNewTasksWithStart(newTaskCreatedChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerNewTaskCreated, start uint64) event.Subscription
 	SubscribeToTaskResponses(taskResponseLogs chan *cstaskmanager.ContractIncredibleSquaringTaskManagerTaskResponded) event.Subscription
+	SubscribeToTaskResponsesWithStart(taskResponseChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerTaskResponded, start uint64) event.Subscription
 	ParseTaskResponded(rawLog types.Log) (*cstaskmanager.ContractIncredibleSquaringTaskManagerTaskResponded, error)
 }
 
@@ -64,9 +67,35 @@ func (s *AvsSubscriber) SubscribeToNewTasks(newTaskCreatedChan chan *cstaskmanag
 	return sub
 }
 
+func (s *AvsSubscriber) SubscribeToNewTasksWithStart(newTaskCreatedChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerNewTaskCreated, start uint64) event.Subscription {
+	sub, err := s.AvsContractBindings.TaskManager.WatchNewTaskCreated(
+		&bind.WatchOpts{
+			Start: &start,
+		}, newTaskCreatedChan, nil,
+	)
+	if err != nil {
+		s.logger.Error("Failed to subscribe to new TaskManager tasks", "err", err)
+	}
+	s.logger.Infof("Subscribed to new TaskManager tasks")
+	return sub
+}
+
 func (s *AvsSubscriber) SubscribeToTaskResponses(taskResponseChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerTaskResponded) event.Subscription {
 	sub, err := s.AvsContractBindings.TaskManager.WatchTaskResponded(
 		&bind.WatchOpts{}, taskResponseChan,
+	)
+	if err != nil {
+		s.logger.Error("Failed to subscribe to TaskResponded events", "err", err)
+	}
+	s.logger.Infof("Subscribed to TaskResponded events")
+	return sub
+}
+
+func (s *AvsSubscriber) SubscribeToTaskResponsesWithStart(taskResponseChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerTaskResponded, start uint64) event.Subscription {
+	sub, err := s.AvsContractBindings.TaskManager.WatchTaskResponded(
+		&bind.WatchOpts{
+			Start: &start,
+		}, taskResponseChan,
 	)
 	if err != nil {
 		s.logger.Error("Failed to subscribe to TaskResponded events", "err", err)

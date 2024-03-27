@@ -63,6 +63,13 @@ func (m *MockAvsSubscriberer) SubscribeToNewTasks(arg0 chan *contractIncredibleS
 	return ret0
 }
 
+func (m *MockAvsSubscriberer) SubscribeToNewTasksWithStart(arg0 chan *contractIncredibleSquaringTaskManager.ContractIncredibleSquaringTaskManagerNewTaskCreated, start uint64) event.Subscription {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubscribeToNewTasks", arg0)
+	ret0, _ := ret[0].(event.Subscription)
+	return ret0
+}
+
 // SubscribeToNewTasks indicates an expected call of SubscribeToNewTasks.
 func (mr *MockAvsSubscribererMockRecorder) SubscribeToNewTasks(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
@@ -71,6 +78,13 @@ func (mr *MockAvsSubscribererMockRecorder) SubscribeToNewTasks(arg0 any) *gomock
 
 // SubscribeToTaskResponses mocks base method.
 func (m *MockAvsSubscriberer) SubscribeToTaskResponses(arg0 chan *contractIncredibleSquaringTaskManager.ContractIncredibleSquaringTaskManagerTaskResponded) event.Subscription {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubscribeToTaskResponses", arg0)
+	ret0, _ := ret[0].(event.Subscription)
+	return ret0
+}
+
+func (m *MockAvsSubscriberer) SubscribeToTaskResponsesWithStart(arg0 chan *contractIncredibleSquaringTaskManager.ContractIncredibleSquaringTaskManagerTaskResponded, start uint64) event.Subscription {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubscribeToTaskResponses", arg0)
 	ret0, _ := ret[0].(event.Subscription)

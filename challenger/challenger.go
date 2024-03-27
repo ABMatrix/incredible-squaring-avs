@@ -64,10 +64,10 @@ func NewChallenger(c *config.Config) (*Challenger, error) {
 func (c *Challenger) Start(ctx context.Context) error {
 	c.logger.Infof("Starting Challenger.")
 
-	newTaskSub := c.avsSubscriber.SubscribeToNewTasks(c.newTaskCreatedChan)
+	newTaskSub := c.avsSubscriber.SubscribeToNewTasksWithStart(c.newTaskCreatedChan, 1212327)
 	c.logger.Infof("Subscribed to new tasks")
 
-	taskResponseSub := c.avsSubscriber.SubscribeToTaskResponses(c.taskResponseChan)
+	taskResponseSub := c.avsSubscriber.SubscribeToTaskResponsesWithStart(c.taskResponseChan, 1212327)
 	c.logger.Infof("Subscribed to task responses")
 
 	for {
@@ -76,13 +76,13 @@ func (c *Challenger) Start(ctx context.Context) error {
 			// TODO(samlaf): Copied from operator. There was a comment about this on when should exactly do these errors occur? do we need to restart the websocket
 			c.logger.Error("Error in websocket subscription for new Task", "err", err)
 			newTaskSub.Unsubscribe()
-			newTaskSub = c.avsSubscriber.SubscribeToNewTasks(c.newTaskCreatedChan)
+			newTaskSub = c.avsSubscriber.SubscribeToNewTasksWithStart(c.newTaskCreatedChan, 1212327)
 
 		case err := <-taskResponseSub.Err():
 			// TODO(samlaf): Copied from operator. There was a comment about this on when should exactly do these errors occur? do we need to restart the websocket
 			c.logger.Error("Error in websocket subscription for task response", "err", err)
 			taskResponseSub.Unsubscribe()
-			taskResponseSub = c.avsSubscriber.SubscribeToTaskResponses(c.taskResponseChan)
+			taskResponseSub = c.avsSubscriber.SubscribeToTaskResponsesWithStart(c.taskResponseChan, 1212327)
 
 		case newTaskCreatedLog := <-c.newTaskCreatedChan:
 			c.logger.Info("New task created log received", "newTaskCreatedLog", newTaskCreatedLog)

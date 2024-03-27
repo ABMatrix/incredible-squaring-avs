@@ -8,18 +8,18 @@ operator_address: 0x0Aeac6FDEF3Fcf066514312C9faCaBC2cD1143a9
 # This is the address of the slasher which is deployed in the anvil saved state
 # The saved eigenlayer state is located in tests/anvil/credible_squaring_avs_deployment_output.json
 # TODO(samlaf): automate updating these addresses when we deploy new contracts
-avs_registry_coordinator_address: 0x6Af9eFB9D6df63731eFeA224e616212eC63Ae84d
-operator_state_retriever_address: 0x6d9B88840Dba1Bcc8ABecD4AcA60546175414D36
+avs_registry_coordinator_address: 0xac095F950637567aB0c53F1D96A3A64044b183bA
+operator_state_retriever_address: 0x069e90E4904cad074fe0Dd9C7F3daCcAd8aa21a0
 
 # ETH RPC URL
 eth_rpc_url: https://ethereum-holesky-rpc.publicnode.com
-eth_ws_url: wss://holesky.drpc.org
+eth_ws_url: wss://ethereum-holesky-rpc.publicnode.com
 
 # If you running this using eigenlayer CLI and the provided AVS packaging structure,
 # this should be /operator_keys/ecdsa_key.json as the host path will be asked while running
 #
 # If you are running locally using go run main.go, this should be full path to your local ecdsa key file
-ecdsa_private_key_store_path: tests/keys/test.ecdsa.key.json
+ecdsa_private_key_store_path: /Users/huangxuchen/.eigenlayer/operator_keys/abm.ecdsa.key.json
 
 # If you running this using eigenlayer CLI and the provided AVS packaging structure,
 # this should be /operator_keys/bls_key.json as the host path will be asked while running
@@ -27,7 +27,7 @@ ecdsa_private_key_store_path: tests/keys/test.ecdsa.key.json
 # We are using bn254 curve for bls keys
 #
 # If you are running locally using go run main.go, this should be full path to your local bls key file
-bls_private_key_store_path: tests/keys/test.bls.key.json
+bls_private_key_store_path: /Users/huangxuchen/.eigenlayer/operator_keys/abm.bls.key.json
 
 aggregator_server_ip_port_address: localhost:8090
 
@@ -40,4 +40,4 @@ enable_node_api: true
 register_operator_on_startup: true
 # address of token to deposit tokens into when registering on startup
 # addresses.erc20MockStrategy in tests/anvil/credible_squaring_avs_deployment_output.json
-token_strategy_addr: 0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f
+token_strategy_addr: 0x84FCb3FFD7Df0A6FcCa54dD6d095425037C25923
