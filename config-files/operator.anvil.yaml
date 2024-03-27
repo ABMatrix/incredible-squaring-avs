@@ -41,3 +41,4 @@ register_operator_on_startup: true
 # address of token to deposit tokens into when registering on startup
 # addresses.erc20MockStrategy in tests/anvil/credible_squaring_avs_deployment_output.json
 token_strategy_addr: 0x84FCb3FFD7Df0A6FcCa54dD6d095425037C25923
+deployment_block: 1212327

@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 
 import "@eigenlayer/contracts/permissions/PauserRegistry.sol";
 import {IDelegationManager} from "@eigenlayer/contracts/interfaces/IDelegationManager.sol";
+import {IAVSDirectory} from "@eigenlayer/contracts/interfaces/IAVSDirectory.sol";
 import {IStrategyManager, IStrategy} from "@eigenlayer/contracts/interfaces/IStrategyManager.sol";
 import {ISlasher} from "@eigenlayer/contracts/interfaces/ISlasher.sol";
 import {StrategyBaseTVLLimits} from "@eigenlayer/contracts/strategies/StrategyBaseTVLLimits.sol";
@@ -89,6 +90,12 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 ".addresses.delegationManager"
             )
         );
+        IAVSDirectory avsDirectory = IAVSDirectory(
+            stdJson.readAddress(
+                eigenlayerDeployedContracts,
+                ".addresses.avsDirectory"
+            )
+        );
         ProxyAdmin eigenLayerProxyAdmin = ProxyAdmin(
             stdJson.readAddress(
                 eigenlayerDeployedContracts,
@@ -120,6 +127,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
         );
         _deployCredibleSquaringContracts(
             delegationManager,
+            avsDirectory,
             erc20MockStrategy,
             credibleSquaringCommunityMultisig,
             credibleSquaringPauser
@@ -158,6 +166,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
 
     function _deployCredibleSquaringContracts(
         IDelegationManager delegationManager,
+        IAVSDirectory avsDirectory,
         IStrategy strat,
         address incredibleSquaringCommunityMultisig,
         address credibleSquaringPauser
@@ -345,7 +354,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
         }
 
         incredibleSquaringServiceManagerImplementation = new IncredibleSquaringServiceManager(
-            delegationManager,
+            avsDirectory,
             registryCoordinator,
             stakeRegistry,
             incredibleSquaringTaskManager

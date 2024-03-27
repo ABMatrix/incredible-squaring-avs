@@ -1,6 +1,6 @@
 {
   "addresses": {
-      "avsDirectory": "0xEb62cCE55f4dA9aFB8BFc85196532BDb650abC15",
+    "avsDirectory": "0xEb62cCE55f4dA9aFB8BFc85196532BDb650abC15",
     "avsDirectoryImplementation": "0xC453FAf618E24E5135cEEe93Df57e6ceC821E674",
     "baseStrategyImplementation": "0xA5473d98669abA06CC38BFC7e83eB07d44401729",
     "beaconOracle": "0x4C116BB629bff7A8373c2378bBd919f8349B8f25",

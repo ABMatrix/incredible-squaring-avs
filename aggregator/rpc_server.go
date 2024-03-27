@@ -40,7 +40,7 @@ func (agg *Aggregator) startServer(ctx context.Context) error {
 type SignedTaskResponse struct {
 	TaskResponse cstaskmanager.IIncredibleSquaringTaskManagerTaskResponse
 	BlsSignature bls.Signature
-	OperatorId   bls.OperatorId
+	OperatorId   [32]byte
 }
 
 // rpc endpoint which is called by operator

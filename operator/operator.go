@@ -2,7 +2,9 @@ package operator
 
 import (
 	"context"
+	"crypto/ecdsa"
 	"fmt"
+	"github.com/Layr-Labs/eigensdk-go/chainio/clients/wallet"
 	"math/big"
 	"os"
 
@@ -39,7 +41,7 @@ const SEM_VER = "0.0.1"
 type Operator struct {
 	config    types.NodeConfig
 	logger    logging.Logger
-	ethClient eth.EthClient
+	ethClient eth.Client
 	// TODO(samlaf): remove both avsWriter and eigenlayerWrite from operator
 	// they are only used for registration, so we should make a special registration package
 	// this way, auditing this operator code makes it obvious that operators don't need to
@@ -54,7 +56,7 @@ type Operator struct {
 	eigenlayerReader sdkelcontracts.ELReader
 	eigenlayerWriter sdkelcontracts.ELWriter
 	blsKeypair       *bls.KeyPair
-	operatorId       bls.OperatorId
+	operatorId       [32]byte
 	operatorAddr     common.Address
 	// receive new tasks in this chan (typically from listening to onchain event)
 	newTaskCreatedChan chan *cstaskmanager.ContractIncredibleSquaringTaskManagerNewTaskCreated
@@ -87,7 +89,7 @@ func NewOperatorFromConfig(c types.NodeConfig) (*Operator, error) {
 	// Setup Node Api
 	nodeApi := nodeapi.NewNodeApi(AVS_NAME, SEM_VER, c.NodeApiIpPortAddress, logger)
 
-	var ethRpcClient, ethWsClient eth.EthClient
+	var ethRpcClient, ethWsClient eth.Client
 	if c.EnableMetrics {
 		rpcCallsCollector := rpccalls.NewCollector(AVS_NAME, reg)
 		ethRpcClient, err = eth.NewInstrumentedClient(c.EthRpcUrl, rpcCallsCollector)
@@ -136,13 +138,29 @@ func NewOperatorFromConfig(c types.NodeConfig) (*Operator, error) {
 		logger.Warnf("OPERATOR_ECDSA_KEY_PASSWORD env var not set. using empty string")
 	}
 
-	signerV2, _, err := signerv2.SignerFromConfig(signerv2.Config{
+	signerv2Config := signerv2.Config{
 		KeystorePath: c.EcdsaPrivateKeyStorePath,
 		Password:     ecdsaKeyPassword,
-	}, chainId)
+	}
+
+	var ecdsaPrivateKey *ecdsa.PrivateKey
+
+	if signerv2Config.IsPrivateKeySigner() {
+		ecdsaPrivateKey = signerv2Config.PrivateKey
+	} else if signerv2Config.IsLocalKeystoreSigner() {
+		ecdsaPrivateKey, err = sdkecdsa.ReadKey(c.EcdsaPrivateKeyStorePath, ecdsaKeyPassword)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		panic("ecdsaPrivateKey not set")
+	}
+
+	signerV2, _, err := signerv2.SignerFromConfig(signerv2Config, chainId)
 	if err != nil {
 		panic(err)
 	}
+
 	chainioConfig := clients.BuildAllConfig{
 		EthHttpUrl:                 c.EthRpcUrl,
 		EthWsUrl:                   c.EthWsUrl,
@@ -151,11 +169,14 @@ func NewOperatorFromConfig(c types.NodeConfig) (*Operator, error) {
 		AvsName:                    AVS_NAME,
 		PromMetricsIpPortAddress:   c.EigenMetricsIpPortAddress,
 	}
-	sdkClients, err := clients.BuildAll(chainioConfig, common.HexToAddress(c.OperatorAddress), signerV2, logger)
+
+	sdkClients, err := clients.BuildAll(chainioConfig, ecdsaPrivateKey, logger)
 	if err != nil {
 		panic(err)
 	}
-	txMgr := txmgr.NewSimpleTxManager(ethRpcClient, logger, signerV2, common.HexToAddress(c.OperatorAddress))
+
+	pkWallet, err := wallet.NewPrivateKeyWallet(ethRpcClient, signerV2, common.HexToAddress(c.OperatorAddress), logger)
+	txMgr := txmgr.NewSimpleTxManager(pkWallet, ethRpcClient, logger, common.HexToAddress(c.OperatorAddress))
 
 	avsWriter, err := chainio.BuildAvsWriter(
 		txMgr, common.HexToAddress(c.AVSRegistryCoordinatorAddress),

@@ -25,13 +25,13 @@ contract IncredibleSquaringServiceManager is ServiceManagerBase {
     }
 
     constructor(
-        IDelegationManager _delegationManager,
+        IAVSDirectory _avsDirectory,
         IRegistryCoordinator _registryCoordinator,
         IStakeRegistry _stakeRegistry,
         IIncredibleSquaringTaskManager _incredibleSquaringTaskManager
     )
         ServiceManagerBase(
-            _delegationManager,
+            _avsDirectory,
             _registryCoordinator,
             _stakeRegistry
         )

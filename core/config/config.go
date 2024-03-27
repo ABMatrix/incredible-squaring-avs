@@ -41,6 +41,7 @@ type Config struct {
 	SignerFn          signerv2.SignerFn `json:"-"`
 	TxMgr             txmgr.TxManager
 	AggregatorAddress common.Address
+	DeploymentBlock   uint64
 }
 
 // These are read from ConfigFileFlag
@@ -50,6 +51,7 @@ type ConfigRaw struct {
 	EthWsUrl                   string              `yaml:"eth_ws_url"`
 	AggregatorServerIpPortAddr string              `yaml:"aggregator_server_ip_port_address"`
 	RegisterOperatorOnStartup  bool                `yaml:"register_operator_on_startup"`
+	DeploymentBlock            uint64              `yaml:"deployment_block"`
 }
 
 // These are read from CredibleSquaringDeploymentFileFlag
@@ -141,6 +143,7 @@ func NewConfig(ctx *cli.Context) (*Config, error) {
 		SignerFn:                                  signerV2,
 		TxMgr:                                     txMgr,
 		AggregatorAddress:                         aggregatorAddr,
+		DeploymentBlock:                           configRaw.DeploymentBlock,
 	}
 	config.validate()
 	return config, nil
