@@ -6,7 +6,7 @@ import (
 	"github.com/Layr-Labs/eigensdk-go/chainio/clients/eth"
 	"github.com/Layr-Labs/eigensdk-go/chainio/clients/wallet"
 	"github.com/Layr-Labs/eigensdk-go/chainio/txmgr"
-	strategymanager "github.com/Layr-Labs/eigensdk-go/contracts/bindings/StrategyManager"
+	delegationManger "github.com/Layr-Labs/eigensdk-go/contracts/bindings/DelegationManager"
 	sdklogging "github.com/Layr-Labs/eigensdk-go/logging"
 	"github.com/Layr-Labs/eigensdk-go/signerv2"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -34,7 +34,7 @@ func main() {
 	}
 	senderAddress := crypto.PubkeyToAddress(ecdsaPrivateKey.PublicKey)
 
-	strategyManagerAddr := common.HexToAddress("0xed9df70f6E01F6eAD317346855808980c457EbeC")
+	delegationManager1 := common.HexToAddress("0x193e0aaD287FD43fBd14A55e44A5dCFC31B0e432")
 
 	ethclient, err := eth.NewClient("https://ethereum-holesky-rpc.publicnode.com")
 	if err != nil {
@@ -45,7 +45,7 @@ func main() {
 		return signerv2.PrivateKeySignerFn(ecdsaPrivateKey, big.NewInt(17000))
 	}
 
-	contractStrategyManager, err := strategymanager.NewContractStrategyManager(strategyManagerAddr, ethclient)
+	contractDelegationManager, err := delegationManger.NewContractDelegationManager(delegationManager1, ethclient)
 	if err != nil {
 		panic(err)
 	}
@@ -66,7 +66,13 @@ func main() {
 
 	fmt.Printf("%+v\n", noSendTxOpts)
 
-	tx, err := contractStrategyManager.DepositIntoStrategy(noSendTxOpts, strategy, token, big.NewInt(5))
+	queuedWithdrawalParams := delegationManger.IDelegationManagerQueuedWithdrawalParams{
+		Strategies: []common.Address{strategy},
+		Shares:     []*big.Int{big.NewInt(5)},
+		Withdrawer: senderAddress,
+	}
+
+	tx, err := contractDelegationManager.QueueWithdrawals(noSendTxOpts, []delegationManger.IDelegationManagerQueuedWithdrawalParams{queuedWithdrawalParams})
 	if err != nil {
 		panic(err)
 	}
