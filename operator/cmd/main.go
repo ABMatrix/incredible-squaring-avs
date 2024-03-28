@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"log"
 	"os"
 
@@ -51,8 +52,12 @@ func operatorMain(ctx *cli.Context) error {
 	}
 	log.Println("initialized operator")
 
+	opts := bind.WatchOpts{
+		Start: &nodeConfig.DeploymentBlock,
+	}
+
 	log.Println("starting operator")
-	err = operator.Start(context.Background())
+	err = operator.Start(context.Background(), &opts)
 	if err != nil {
 		return err
 	}

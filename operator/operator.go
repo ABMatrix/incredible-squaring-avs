@@ -270,7 +270,7 @@ func NewOperatorFromConfig(c types.NodeConfig) (*Operator, error) {
 
 }
 
-func (o *Operator) Start(ctx context.Context) error {
+func (o *Operator) Start(ctx context.Context, opts *bind.WatchOpts) error {
 	operatorIsRegistered, err := o.avsReader.IsOperatorRegistered(&bind.CallOpts{}, o.operatorAddr)
 	if err != nil {
 		o.logger.Error("Error checking if operator is registered", "err", err)
@@ -295,7 +295,7 @@ func (o *Operator) Start(ctx context.Context) error {
 	}
 
 	// TODO(samlaf): wrap this call with increase in avs-node-spec metric
-	sub := o.avsSubscriber.SubscribeToNewTasks(o.newTaskCreatedChan)
+	sub := o.avsSubscriber.SubscribeToNewTasks(o.newTaskCreatedChan, opts)
 	for {
 		select {
 		case <-ctx.Done():
@@ -309,7 +309,7 @@ func (o *Operator) Start(ctx context.Context) error {
 			// TODO(samlaf): write unit tests to check if this fixed the issues we were seeing
 			sub.Unsubscribe()
 			// TODO(samlaf): wrap this call with increase in avs-node-spec metric
-			sub = o.avsSubscriber.SubscribeToNewTasks(o.newTaskCreatedChan)
+			sub = o.avsSubscriber.SubscribeToNewTasks(o.newTaskCreatedChan, opts)
 		case newTaskCreatedLog := <-o.newTaskCreatedChan:
 			o.metrics.IncNumTasksReceived()
 			taskResponse := o.ProcessNewTaskCreatedLog(newTaskCreatedLog)

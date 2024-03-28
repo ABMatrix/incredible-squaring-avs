@@ -3,6 +3,7 @@ package operator
 import (
 	"context"
 	"fmt"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"math/big"
 	"testing"
 	"time"
@@ -98,7 +99,7 @@ func TestOperator(t *testing.T) {
 
 		ctx, cancel := context.WithCancel(context.Background())
 		go func() {
-			err := operator.Start(ctx)
+			err := operator.Start(ctx, &bind.WatchOpts{})
 			assert.Nil(t, err)
 		}()
 		operator.newTaskCreatedChan <- newTaskCreatedEvent

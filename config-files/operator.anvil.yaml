@@ -12,8 +12,8 @@ avs_registry_coordinator_address: 0xeB7EbDdE99684470D6DAf7AE530fB54e8c26c33d
 operator_state_retriever_address: 0x8584a4751e5c881bb3e6C65F7Ee01414b07Aacb3
 
 # ETH RPC URL
-eth_rpc_url: https://holesky.drpc.org
-eth_ws_url: wss://holesky.drpc.org
+eth_rpc_url: https://ethereum-holesky-rpc.publicnode.com
+eth_ws_url: wss://ethereum-holesky-rpc.publicnode.com
 
 # If you running this using eigenlayer CLI and the provided AVS packaging structure,
 # this should be /operator_keys/ecdsa_key.json as the host path will be asked while running
@@ -37,7 +37,7 @@ enable_metrics: true
 node_api_ip_port_address: localhost:9010
 enable_node_api: true
 
-register_operator_on_startup: true
+register_operator_on_startup: false
 # address of token to deposit tokens into when registering on startup
 # addresses.erc20MockStrategy in tests/anvil/credible_squaring_avs_deployment_output.json
 token_strategy_addr: 0x3B2fB6Fb6d96fC823aFB1D2579411E2AFd3eC204

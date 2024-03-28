@@ -141,7 +141,7 @@ func TestIntegration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create operator: %s", err.Error())
 	}
-	go operator.Start(ctx)
+	go operator.Start(ctx, &bind.WatchOpts{})
 	log.Println("Started operator. Sleeping 15 seconds to give it time to register...")
 	time.Sleep(15 * time.Second)
 

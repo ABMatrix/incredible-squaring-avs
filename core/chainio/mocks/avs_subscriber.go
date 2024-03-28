@@ -9,6 +9,7 @@
 package mocks
 
 import (
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	reflect "reflect"
 
 	contractIncredibleSquaringTaskManager "github.com/Layr-Labs/incredible-squaring-avs/contracts/bindings/IncredibleSquaringTaskManager"
@@ -56,7 +57,7 @@ func (mr *MockAvsSubscribererMockRecorder) ParseTaskResponded(arg0 any) *gomock.
 }
 
 // SubscribeToNewTasks mocks base method.
-func (m *MockAvsSubscriberer) SubscribeToNewTasks(arg0 chan *contractIncredibleSquaringTaskManager.ContractIncredibleSquaringTaskManagerNewTaskCreated) event.Subscription {
+func (m *MockAvsSubscriberer) SubscribeToNewTasks(arg0 chan *contractIncredibleSquaringTaskManager.ContractIncredibleSquaringTaskManagerNewTaskCreated, opts *bind.WatchOpts) event.Subscription {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubscribeToNewTasks", arg0)
 	ret0, _ := ret[0].(event.Subscription)
