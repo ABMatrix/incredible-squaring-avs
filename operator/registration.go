@@ -68,6 +68,7 @@ func (o *Operator) DepositIntoStrategy(strategyAddr common.Address, amount *big.
 		o.logger.Error("Failed to fetch strategy contract", "err", err)
 		return err
 	}
+	fmt.Println("tokenAddr: ", tokenAddr)
 	contractErc20Mock, err := o.avsReader.GetErc20Mock(context.Background(), tokenAddr)
 	if err != nil {
 		o.logger.Error("Failed to fetch ERC20Mock contract", "err", err)
